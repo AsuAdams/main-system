@@ -28,9 +28,9 @@
 body { font-family:'Libre Franklin',sans-serif; background:var(--cream); color:#2d2d2d; }
 header {
 position:fixed; top:0; left:0; right:0; height:90px;
-background:white;
+background:white; 
 border-bottom:1px solid var(--border);
-z-index:1000;
+z-index:1000; 
 box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
 .header-container {
@@ -55,8 +55,8 @@ align-items: center;
 gap: 15px;
 }
 .logo {
-font-family:'Cormorant Garamond',serif;
-font-size:2.2rem;
+font-family:'Cormorant Garamond',serif; 
+font-size:2.2rem; 
 color:var(--deep-green);
 display: flex;
 align-items: center;
@@ -66,11 +66,11 @@ gap: 10px;
 font-size: 2.5rem;
 color: var(--gold);
 }
-.logo small {
-font-size:0.85rem;
-display:block;
-margin-top:-2px;
-color:var(--gold);
+.logo small { 
+font-size:0.85rem; 
+display:block; 
+margin-top:-2px; 
+color:var(--gold); 
 letter-spacing:1.5px;
 }
 .search-section {
@@ -753,10 +753,8 @@ opacity: 1;
 <thead>
 <tr>
 <th>Department Name</th>
-<th>Head</th>
-<th>Members</th>
-<th>Status</th>
-<th>Actions</th>
+<th>Status Of The Department</th>
+<th>Actions To Take For The Department</th>
 </tr>
 </thead>
 <tbody id="departmentsTableBody">
@@ -1154,6 +1152,7 @@ lajna: [],
 atfal: [],
 jalsa: []
 };
+
 // Load data from localStorage
 function loadData() {
 const savedData = localStorage.getItem('acmsUgandaData');
@@ -1169,25 +1168,27 @@ loadPageData('departments');
 loadPageData('regions');
 loadPageData('mosques');
 }
+
 // Save data to localStorage
 function saveData() {
 localStorage.setItem('acmsUgandaData', JSON.stringify(database));
 updateStats();
 }
+
 // Initialize sample data
 function initializeSampleData() {
 database.members = [
 { id: 'UG-1001', name: 'Muhammad Ali', region: 'Central', department: 'Education', status: 'active', age: 32, joined: '2015' },
-{ id: 'UG-1002', name: 'Aisha Khan', region: 'Eastern', department: 'Health', status: 'active', age: 28, joined: '2018' },
-{ id: 'UG-1003', name: 'Yusuf Ahmed', region: 'Western', department: 'Finance', status: 'active', age: 45, joined: '2010' },
+{ id: 'UG-1002', name: 'Aisha Khan', region: 'Eastern', department: 'Health', status: 'inactive', age: 28, joined: '2018' },
+{ id: 'UG-1003', name: 'Yusuf Ahmed', region: 'Western', department: 'Finance', status: 'pending', age: 45, joined: '2010' },
 { id: 'UG-1004', name: 'Fatima Zohra', region: 'Northern', department: 'Publications', status: 'active', age: 35, joined: '2012' },
 { id: 'UG-1005', name: 'Omar Hassan', region: 'Central', department: 'Khuddam', status: 'active', age: 22, joined: '2020' }
 ];
 database.departments = [
-{ id: 'dept-001', name: 'Umoomi', head: 'Muhammad Iqbal', members: 15, status: 'active' },
-{ id: 'dept-002', name: 'Umoomi', head: 'Abdul Rahman', members: 23, status: 'active' },
+{ id: 'dept-001', name: 'Finance & Chanda', head: 'Muhammad Iqbal', members: 15, status: 'active' },
+{ id: 'dept-002', name: 'Education Department', head: 'Abdul Rahman', members: 23, status: 'inactive' },
 { id: 'dept-003', name: 'Health Services', head: 'Dr. Amina Yusuf', members: 18, status: 'active' },
-{ id: 'dept-004', name: 'Publications & Media', head: 'Zaid Khan', members: 12, status: 'active' }
+{ id: 'dept-004', name: 'Publications & Media', head: 'Zaid Khan', members: 12, status: 'pending' }
 ];
 database.regions = [
 { id: 'reg-001', name: 'Central Region', majalis: 42, members: 18500, president: 'Hafiz Ahmad' },
@@ -1218,11 +1219,13 @@ database.jalsa = [
 ];
 saveData();
 }
+
 // ==================== PAGE SWITCHING ====================
 let currentEntityType = '';
 let currentItemName = '';
 let currentPage = 'dashboard';
 let currentItemId = null;
+
 function showPage(id) {
 currentPage = id;
 document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
@@ -1232,6 +1235,7 @@ const activeMenuItem = document.querySelector(`.menu-item[onclick="showPage('${i
 if (activeMenuItem) activeMenuItem.classList.add('active');
 loadPageData(id);
 }
+
 function loadPageData(page) {
 switch(page) {
 case 'members':
@@ -1260,6 +1264,7 @@ loadJalsaTable();
 break;
 }
 }
+
 // ==================== TABLE LOADERS ====================
 function loadMembersTable() {
 const tbody = document.getElementById('membersTableBody');
@@ -1285,6 +1290,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadDepartmentsTable() {
 const tbody = document.getElementById('departmentsTableBody');
 tbody.innerHTML = '';
@@ -1293,21 +1299,23 @@ const row = document.createElement('tr');
 row.className = 'clickable-row';
 row.innerHTML = `
 <td>${dept.name}</td>
-<td>${dept.head}</td>
-<td>${dept.members}</td>
 <td><span class="badge badge-active">Active</span></td>
 <td class="item-actions">
-<button class="item-btn btn-view" onclick="enterDepartment('${dept.id}', '${dept.name.replace(/'/g, "\\'")}')">
-<i class="fas fa-door-open"></i> Enter
-</button>
 <button class="item-btn btn-edit" onclick="manageDepartment('${dept.id}', '${dept.name.replace(/'/g, "\\'")}')">
-<i class="fas fa-cog"></i> Manage
+<i class="fas fa-cog"></i> Manage Department
+</button>
+<button class="item-btn btn-edit" onclick="openEditModal('department', '${dept.id}')">
+<i class="fas fa-edit"></i> Edit Department
+</button>
+<button class="item-btn btn-remove" onclick="openDeleteConfirm('department', '${dept.id}', '${dept.name}')">
+<i class="fas fa-trash"></i> Remove Department
 </button>
 </td>
 `;
 tbody.appendChild(row);
 });
 }
+
 function loadRegionsTable() {
 const tbody = document.getElementById('regionsTableBody');
 tbody.innerHTML = '';
@@ -1331,6 +1339,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadMosquesTable() {
 const tbody = document.getElementById('mosquesTableBody');
 tbody.innerHTML = '';
@@ -1355,6 +1364,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadKhuddamTable() {
 const tbody = document.getElementById('khuddamTableBody');
 tbody.innerHTML = '';
@@ -1378,6 +1388,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadLajnaTable() {
 const tbody = document.getElementById('lajnaTableBody');
 tbody.innerHTML = '';
@@ -1401,6 +1412,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadAtfalTable() {
 const tbody = document.getElementById('atfalTableBody');
 tbody.innerHTML = '';
@@ -1424,6 +1436,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 function loadJalsaTable() {
 const tbody = document.getElementById('jalsaTableBody');
 tbody.innerHTML = '';
@@ -1447,6 +1460,7 @@ row.innerHTML = `
 tbody.appendChild(row);
 });
 }
+
 // ==================== CRUD OPERATIONS ====================
 function openAddModal(entityType) {
 currentEntityType = entityType;
