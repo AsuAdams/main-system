@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 :root {
---khuddam-blue: #1e3a5f;
+--khuddam-blue: #021c24;
 --khuddam-gold: #c6a43c;
 --cream: #FAF9F5;
 --border: #E8E2D9;
@@ -27,6 +27,7 @@ body { font-family: 'Libre Franklin', sans-serif; background: var(--cream); colo
 header { background: var(--khuddam-blue); border-bottom: 3px solid var(--khuddam-gold); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
 .header-container { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; gap: 15px; }
 .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+.logo img { width: 50px; height: 50px; border-radius: 2000px; border: 2px solid var(--khuddam-gold); object-fit: cover; }
 .logo i { color: var(--khuddam-gold); }
 .logo small { font-size: 0.75rem; color: var(--khuddam-gold); letter-spacing: 1px; display: block; margin-top: -3px; }
 /* Action Buttons */
@@ -59,6 +60,40 @@ header { background: var(--khuddam-blue); border-bottom: 3px solid var(--khuddam
 .stat-card .stat-label { font-size: 0.85rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; }
 .stat-card .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--khuddam-blue); font-family: 'Cormorant Garamond', serif; }
 .stat-card .stat-sub { font-size: 0.75rem; color: #999; margin-top: 3px; }
+/* Non-Khuddam stat card styling */
+.stat-card.non-khuddam {
+  border-left-color: var(--danger);
+  background: linear-gradient(135deg, #fff5f5 0%, #ffebee 100%);
+}
+.stat-card.non-khuddam .stat-icon { color: var(--danger); }
+.stat-card.non-khuddam .stat-value { color: #c62828; }
+/* Clear button styling */
+.btn-clear {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  width: 100%;
+  justify-content: center;
+}
+.btn-clear:hover {
+  background: #ffcdd2;
+  transform: translateY(-1px);
+}
+.btn-clear.active {
+  background: #e3f2fd;
+  color: #1565c0;
+  border-color: #90caf9;
+}
 /* Section Card */
 .section-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
@@ -121,10 +156,10 @@ tr:hover { background: rgba(198, 164, 60, 0.05); }
 <header>
 <div class="header-container">
 <a href="#" class="logo">
-<i class="fas fa-users"></i>
+<img src="https://avatars.githubusercontent.com/u/214355993?v=4" alt="AMUL Uganda Logo">
 <div>
-Tajneed Department
-<small>MAJLIS KHUDAM-UL-AHMADIYYA</small>
+KHUDDAM-UL-AHMADIYYA
+<small>MEMBERS MANAGEMENT SYSTEM</small>
 </div>
 </a>
 <div class="action-bar">
@@ -144,37 +179,40 @@ Tajneed Department
 <!-- Welcome Banner -->
 <div class="welcome-banner">
 <div>
-<h1><i class="fas fa-address-book"></i> Tajneed Directory</h1>
+<h1><i class="fas fa-address-book"></i> Tajneed_Department</h1>
 <div class="last-updated" id="lastUpdated">Loading...</div>
 </div>
 <div class="region-badge" id="currentRegionDisplay">All Regions</div>
 </div>
 <!-- Stats Grid -->
 <div class="stats-grid">
-<div class="stat-card">
-<div class="stat-icon"><i class="fas fa-user-shield"></i></div>
-<div class="stat-label">Khuddam (15-40)</div>
-<div class="stat-value" id="statKhuddam">0</div>
-<div class="stat-sub">15 to 40 years</div>
-</div>
-<div class="stat-card">
-<div class="stat-icon"><i class="fas fa-child"></i></div>
-<div class="stat-label">Atfal (7-14)</div>
-<div class="stat-value" id="statAtfal">0</div>
-<div class="stat-sub">7 to 14 years</div>
-</div>
-<div class="stat-card">
-<div class="stat-icon"><i class="fas fa-people-group"></i></div>
-<div class="stat-label">Total Members</div>
-<div class="stat-value" id="statTotal">0</div>
-<div class="stat-sub">All ages</div>
-</div>
-<div class="stat-card">
-<div class="stat-icon"><i class="fas fa-map-pin"></i></div>
-<div class="stat-label">Active Subregions</div>
-<div class="stat-value" id="statSubregions">0</div>
-<div class="stat-sub">With members</div>
-</div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-user-shield"></i></div>
+    <div class="stat-label">Khuddam (15-40)</div>
+    <div class="stat-value" id="statKhuddam">0</div>
+    <div class="stat-sub">15 to 40 years</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-child"></i></div>
+    <div class="stat-label">Atfal (7-14)</div>
+    <div class="stat-value" id="statAtfal">0</div>
+    <div class="stat-sub">7 to 14 years</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-users"></i></div>
+    <div class="stat-label">Total Members</div>
+    <div class="stat-value" id="statTotal">0</div>
+    <div class="stat-sub">Khuddam + Atfal</div>
+  </div>
+  <div class="stat-card non-khuddam">
+    <div class="stat-icon"><i class="fas fa-user-slash"></i></div>
+    <div class="stat-label">Non-Khuddam Members</div>
+    <div class="stat-value" id="statNonKhuddam">0</div>
+    <div class="stat-sub">Ansar (40+) & others</div>
+    <button class="btn-clear" id="btnClearNonKhuddam" onclick="toggleNonKhuddamFilter()">
+      <i class="fas fa-filter"></i> Clear from View
+    </button>
+  </div>
 </div>
 <!-- Members Section -->
 <div class="section-card">
@@ -335,6 +373,7 @@ auth: { persistSession: false }
 let allMembers = [], allSubregions = [], allRegions = [], allDepartments = [];
 let currentRegionId = null;
 let regionNames = {}, subregionNames = {}, departmentNames = {};
+let hideNonKhuddam = false; // Filter state for non-Khuddam members
 // === HELPERS ===
 function escapeHtml(str) {
 if (!str) return str;
@@ -491,6 +530,13 @@ showNotification('Failed to load members', 'error');
 // === MAIN LOAD ===
 async function loadAllData() {
 try {
+// Reset non-Khuddam filter on fresh load
+hideNonKhuddam = false;
+const btn = document.getElementById('btnClearNonKhuddam');
+if (btn) {
+btn.classList.remove('active');
+btn.innerHTML = '<i class="fas fa-filter"></i> Clear from View';
+}
 await loadDropdownData();
 await loadMembers();
 } catch (e) {
@@ -505,20 +551,22 @@ await loadAllData();
 }
 // === UPDATE STATS ===
 function updateStats() {
-let k = 0, a = 0, ans = 0;
+let k = 0, a = 0, nonK = 0;
 allMembers.forEach(m => {
 const age = calculateAge(m.dob);
 if (age !== null) {
-if (age >= 15 && age < 40) k++;
-else if (age >= 7 && age < 15) a++;
-else if (age >= 40) ans++;
+if (age >= 15 && age < 40) k++;          // Khuddam
+else if (age >= 7 && age < 15) a++;       // Atfal
+else nonK++;                               // Ansar (40+) or <7
+} else {
+nonK++; // Unknown age counts as non-Khuddam
 }
 });
 document.getElementById('statKhuddam').textContent = k;
 document.getElementById('statAtfal').textContent = a;
-document.getElementById('statTotal').textContent = allMembers.length;
-const activeSubs = new Set(allMembers.map(m => m.qiadat_id || m.subregion_id).filter(Boolean)).size;
-document.getElementById('statSubregions').textContent = activeSubs;
+document.getElementById('statTotal').textContent = k + a; // Only eligible members
+document.getElementById('statNonKhuddam').textContent = nonK;
+// Removed Active Subregions logic
 }
 // === UPDATE FILTER DROPDOWNS ===
 function updateFilterDropdowns() {
@@ -535,6 +583,21 @@ const usedSubs = new Set(allMembers.map(m => m.qiadat_id || m.subregion_id).filt
 usedSubs.forEach(id => { const name = subregionNames[id] || 'Unknown'; subregionOpts.push(`<option value="${id}">${escapeHtml(name)}</option>`); });
 subregionFilter.innerHTML = subregionOpts.join('');
 }
+// === TOGGLE NON-KHUDDAM FILTER ===
+window.toggleNonKhuddamFilter = function() {
+hideNonKhuddam = !hideNonKhuddam;
+const btn = document.getElementById('btnClearNonKhuddam');
+if (hideNonKhuddam) {
+btn.classList.add('active');
+btn.innerHTML = '<i class="fas fa-undo"></i> Show All Members';
+showNotification('Filtering: Showing only Khuddam + Atfal', 'info');
+} else {
+btn.classList.remove('active');
+btn.innerHTML = '<i class="fas fa-filter"></i> Clear from View';
+showNotification('Showing all members', 'info');
+}
+filterMembers();
+};
 // === FILTER MEMBERS (FULLY FUNCTIONAL) ===
 function filterMembers() {
 const search = document.getElementById('memberSearch').value.toLowerCase();
@@ -542,7 +605,6 @@ const regionFilter = document.getElementById('regionFilter').value;
 const subregionFilter = document.getElementById('subregionFilter').value;
 const ageGroupFilter = document.getElementById('ageGroupFilter').value;
 const statusFilter = document.getElementById('statusFilter').value;
-// Load subregions when region changes
 if (regionFilter && regionFilter !== 'all') {
 loadSubregionsForFilter(regionFilter);
 }
@@ -560,7 +622,9 @@ const ageGroup = getAgeGroup(age);
 const matchAgeGroup = ageGroupFilter === 'all' || ageGroup === ageGroupFilter;
 // Status filter
 const matchStatus = statusFilter === 'all' || (m.status || 'Active') === statusFilter;
-return matchSearch && matchRegion && matchSubregion && matchAgeGroup && matchStatus;
+// NEW: Non-Khuddam filter (hide members not in Khuddam/Atfal age range)
+const matchNonKhuddam = !hideNonKhuddam || (age !== null && age >= 7 && age < 40);
+return matchSearch && matchRegion && matchSubregion && matchAgeGroup && matchStatus && matchNonKhuddam;
 });
 renderMembers(filtered);
 }
@@ -815,6 +879,7 @@ window.previewAgeGroup = previewAgeGroup;
 window.viewMember = viewMember;
 window.editMember = editMember;
 window.deleteMember = deleteMember;
+window.toggleNonKhuddamFilter = toggleNonKhuddamFilter;
 document.addEventListener('DOMContentLoaded', init);
 })();
 </script>
